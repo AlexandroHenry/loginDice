@@ -38,97 +38,105 @@ class _LogInState extends State<LogIn> {
         ),
         body: Builder(
           builder: (context) {
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(top: 50),
-                  ),
-                  const Center(
-                    child: Image(
-                      image: AssetImage('assets/images/chef.gif'),
-                      width: 170,
-                      height: 190,
+            return GestureDetector(
+              onTap: () {
+                // 포커스가 잡혀 있는 상태에서 화면을 탭해주면 해당 포커스가 해제됩니다
+                // 예로, 키보드가 올라와있는 상태(TextField 가 Focus 를 받고 있는 상태)
+                // 에서 화면을 탭해주면 해당 Focus 가 Unfocus 되면서 키보드가 다시 내려갑니다
+                FocusScope.of(context).unfocus();
+              },
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(top: 50),
                     ),
-                  ),
-                  Form(
-                    child: Theme(
-                      data: ThemeData(
-                        primaryColor: Colors.teal,
-                        inputDecorationTheme: const InputDecorationTheme(
-                            labelStyle:
-                                TextStyle(color: Colors.teal, fontSize: 15)),
+                    const Center(
+                      child: Image(
+                        image: AssetImage('assets/images/chef.gif'),
+                        width: 170,
+                        height: 190,
                       ),
-                      child: Container(
-                        padding: const EdgeInsets.all(40),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            TextField(
-                              // 컨트롤러 추가 1
-                              controller: idController,
-                              decoration: const InputDecoration(
-                                labelText: 'Enter "Dice"',
+                    ),
+                    Form(
+                      child: Theme(
+                        data: ThemeData(
+                          primaryColor: Colors.teal,
+                          inputDecorationTheme: const InputDecorationTheme(
+                              labelStyle:
+                                  TextStyle(color: Colors.teal, fontSize: 15)),
+                        ),
+                        child: Container(
+                          padding: const EdgeInsets.all(40),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              TextField(
+                                // 컨트롤러 추가 1
+                                controller: idController,
+                                decoration: const InputDecoration(
+                                  labelText: 'Enter "Dice"',
+                                ),
+                                keyboardType: TextInputType.emailAddress,
                               ),
-                              keyboardType: TextInputType.emailAddress,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            TextField(
-                              // 컨트롤러 추가 1
-                              controller: pwController,
-                              decoration: const InputDecoration(
-                                labelText: 'Enter "Password"',
+                              const SizedBox(
+                                height: 10,
                               ),
-                              keyboardType: TextInputType.text,
-                              // 비밀번호 등의 보안을 위해 Input 에 Masking 해줄때
-                              // obscureText 를 true 로 해줍니다.
-                              obscureText: true,
-                            ),
-                            const SizedBox(
-                              height: 40,
-                            ),
-                            ButtonTheme(
-                              minWidth: 100,
-                              height: 50,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  if (idController.text == 'dice' &&
-                                      pwController.text == '1234') {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) {
-                                      return const Dice();
-                                    }));
-                                  } else if (idController.text != 'dice' &&
-                                      pwController.text != '1234') {
-                                    showSnackBar(context);
-                                  } else if (idController.text != 'dice' &&
-                                      pwController.text == '1234') {
-                                    showSnackBar2(context);
-                                  } else {
-                                    showSnackBar3(context);
-                                  }
-                                },
-                                style: const ButtonStyle(
-                                  backgroundColor: MaterialStatePropertyAll(
-                                    Colors.deepOrangeAccent,
+                              TextField(
+                                // 컨트롤러 추가 2
+                                controller: pwController,
+                                decoration: const InputDecoration(
+                                  labelText: 'Enter "Password"',
+                                ),
+                                keyboardType: TextInputType.text,
+                                // 비밀번호 등의 보안을 위해 Input 에 Masking 해줄때
+                                // obscureText 를 true 로 해줍니다.
+                                obscureText: true,
+                              ),
+                              const SizedBox(
+                                height: 40,
+                              ),
+                              ButtonTheme(
+                                minWidth: 100,
+                                height: 50,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    if (idController.text == 'dice' &&
+                                        pwController.text == '1234') {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) {
+                                        return const Dice();
+                                      }));
+                                    } else if (idController.text != 'dice' &&
+                                        pwController.text != '1234') {
+                                      showSnackBar(context);
+                                    } else if (idController.text != 'dice' &&
+                                        pwController.text == '1234') {
+                                      showSnackBar2(context);
+                                    } else {
+                                      showSnackBar3(context);
+                                    }
+                                  },
+                                  style: const ButtonStyle(
+                                    backgroundColor: MaterialStatePropertyAll(
+                                      Colors.deepOrangeAccent,
+                                    ),
+                                  ),
+                                  child: const Icon(
+                                    Icons.arrow_forward,
+                                    color: Colors.white,
+                                    size: 35,
                                   ),
                                 ),
-                                child: const Icon(
-                                  Icons.arrow_forward,
-                                  color: Colors.white,
-                                  size: 35,
-                                ),
-                              ),
-                            )
-                          ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             );
           },
